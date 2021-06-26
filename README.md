@@ -8,3 +8,7 @@ This is a ReactJS based personal project.
 
 ![ReactJs App](https://raw.githubusercontent.com/Denver44/Covid19_Tracker_ReactJs/master/screenshots/1.png)
 ![ReactJs App](https://raw.githubusercontent.com/Denver44/Covid19_Tracker_ReactJs/master/screenshots/2.png)
+![ReactJs App](https://raw.githubusercontent.com/Denver44/Covid19_Tracker_ReactJs/master/screenshots/3.png)
+![ReactJs App](https://raw.githubusercontent.com/Denver44/Covid19_Tracker_ReactJs/master/screenshots/4.png)
+![ReactJs App](https://raw.githubusercontent.com/Denver44/Covid19_Tracker_ReactJs/master/screenshots/5.png)
+![ReactJs App](https://raw.githubusercontent.com/Denver44/Covid19_Tracker_ReactJs/master/screenshots/6.png)
