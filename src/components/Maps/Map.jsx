@@ -1,21 +1,26 @@
-import React from "react";
+import React, { useState } from "react";
 import { MapContainer as LeafletMap, TileLayer } from "react-leaflet";
 import "./Map.css";
-import { showDataOnMap } from "../utils/util.jsx";
+import { showDataOnMap } from "../utils/util.js";
 
-function Mapp({ countries, casesType, position, zoom }) {
-  // console.log(zoom);
+function Map({ countries, casesType, position, zoom }) {
+  const [map, setMap] = useState(null);
+  if (map) {
+    map.flyTo(position);
+  }
+
   return (
     <div className="map">
-      <LeafletMap center={position} zoom={zoom}>
-       <TileLayer
-          url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
+      <LeafletMap center={position} zoom={zoom} whenCreated={setMap}>
+        <TileLayer
           attribution='&copy; <a href="http://osm.org/copyright">OpenStreetMap</a> contributors'
+          url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
         />
+
         {showDataOnMap(countries, casesType)}
       </LeafletMap>
     </div>
   );
 }
 
-export default Mapp;
+export default Map;
