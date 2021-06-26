@@ -6,11 +6,10 @@ import {
   Card,
   CardContent,
 } from "@material-ui/core";
-import InfoBox from "./components/InfoBox/InfoBox.jsx";
 import Map from "./components/Maps/Map.jsx";
 import Table from "./components/Table/Table.jsx";
 import Graph from "./components/Graph/Graph.jsx";
-import { sortData, prettyPrintStat } from "./components/utils/util.jsx";
+import { sortData } from "./components/utils/util.jsx";
 import "leaflet/dist/leaflet.css";
 import "./app.css";
 import icon from "./images/coronavirus.png";
@@ -20,15 +19,17 @@ import {
   handleFetchData,
 } from "./components/Api/api.js";
 
+import AppStats from "./components/AppStats/AppStats.jsx";
+
 function App() {
   const [countries, setCountries] = useState([]);
   const [country, setCountry] = useState("Worldwide");
   const [countryInfo, setCountryInfo] = useState({});
-  const [tableData, setTableData] = useState([]);
   const [casesType, setCasesType] = useState("cases");
+  const [tableData, setTableData] = useState([]);
   const [mapCountries, setMapCountries] = useState([]);
   const [mapCenter, setMapCenter] = useState({ lat: 21.5937, lng: 76.9629 });
-  const [mapZoom, setMapZoom] = useState(5);
+  const [mapZoom, setMapZoom] = useState(4);
 
   const fetchAllData = () => {
     const result = handleFetchData("/all");
@@ -92,7 +93,6 @@ function App() {
               onChange={onCountryChange}
             >
               <MenuItem value="Worldwide">Worldwide</MenuItem>
-
               {countries.map((country) => (
                 <MenuItem value={country.value}>{country.name}</MenuItem>
               ))}
@@ -100,32 +100,14 @@ function App() {
           </FormControl>
         </div>
 
-        {/* Title + select input dropdown field */}
-
         <div className="app_stats">
-          <InfoBox
-            isRed
-            active={casesType === "cases"}
-            onClick={(e) => setCasesType("cases")}
-            title="Coronavirus Cases"
-            cases={prettyPrintStat(countryInfo.todayCases)}
-            total={prettyPrintStat(countryInfo.cases)}
-          ></InfoBox>
-          <InfoBox
-            active={casesType === "recovered"}
-            onClick={(e) => setCasesType("recovered")}
-            title="Recovered"
-            cases={prettyPrintStat(countryInfo.todayRecovered)}
-            total={prettyPrintStat(countryInfo.recovered)}
-          ></InfoBox>
-          <InfoBox
-            isRed
-            active={casesType === "deaths"}
-            onClick={(e) => setCasesType("deaths")}
-            title="Deaths"
-            cases={prettyPrintStat(countryInfo.todayDeaths)}
-            total={prettyPrintStat(countryInfo.deaths)}
-          ></InfoBox>
+          <AppStats
+            {...{
+              countryInfo,
+              casesType,
+              setCasesType,
+            }}
+          />
         </div>
 
         <Map

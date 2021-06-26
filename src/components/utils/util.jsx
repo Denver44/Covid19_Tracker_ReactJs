@@ -9,9 +9,9 @@ export const sortData = (data) => {
 
 const casesTypeColors = {
   cases: {
-    hex: "#CC1034",
-    rgb: "rgb(204, 16, 52)",
-    half_op: "rgba(204, 16, 52, 0.5)",
+    hex: "#ffa500",
+    rgb: "rgb(255, 165,0)",
+    half_op: "rgba(255, 165, 0, 0.5)",
     multiplier: 800,
   },
   recovered: {
@@ -32,15 +32,19 @@ const casesTypeColors = {
 export const showDataOnMap = (data, casesType) =>
   data.map((country) => (
     <Circle
+      pathOptions={{
+        color: casesTypeColors[casesType].hex,
+        fillColor: casesTypeColors[casesType].hex,
+      }}
       center={[country.countryInfo.lat, country.countryInfo.long]}
-      color={casesTypeColors[casesType].hex}
-      fillColor={casesTypeColors[casesType].hex}
       fillOpacity={0.4}
       radius={
         10 *
         Math.sqrt(country[casesType] * casesTypeColors[casesType].multiplier)
       }
     >
+      {console.log("CASES ", casesType)}
+      {console.log("data ", data)}
       <Popup>
         <div className="info-container">
           <div
