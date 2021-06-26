@@ -7,7 +7,7 @@ export const sortData = (data) => {
   return sortedData.sort((a, b) => (a.cases > b.cases ? -1 : 1));
 };
 
-const casesTypeColors = {
+export const casesTypeColors = {
   cases: {
     hex: "#ffa500",
     rgb: "rgb(255, 165,0)",
@@ -28,7 +28,6 @@ const casesTypeColors = {
   },
 };
 
-// Draw circle on the map with intertctive tooltip
 export const showDataOnMap = (data, casesType) =>
   data.map((country) => (
     <Circle
@@ -71,4 +70,62 @@ export const showDataOnMap = (data, casesType) =>
 export const prettyPrintStat = (stat) =>
   stat ? `+${numeral(stat).format("0.0a")}` : "+0";
 
-// if stat exist then do other wise +0.
+export const options = {
+  legend: {
+    display: false,
+  },
+  elements: {
+    point: {
+      radius: 0,
+    },
+  },
+  maintainAspectRatio: false,
+  tooltips: {
+    mode: "index",
+    intersect: false,
+    callbacks: {
+      label: function (tooltipItem) {
+        return numeral(tooltipItem.value).format("+0,0");
+      },
+    },
+  },
+  scales: {
+    xAxes: [
+      {
+        type: "time",
+        time: {
+          parser: "MM/DD/YY",
+          tooltipFormat: "ll",
+        },
+      },
+    ],
+    yAxes: [
+      {
+        gridLines: {
+          display: false,
+        },
+        ticks: {
+          callback: function (value) {
+            return numeral(value).format("0a");
+          },
+        },
+      },
+    ],
+  },
+};
+
+export const BuildChart = (data, casesType = "cases") => {
+  const chartData = [];
+  let lastDataPoint;
+  for (let date in data.cases) {
+    if (lastDataPoint) {
+      const newDataPoint = {
+        x: date,
+        y: data[casesType][date] - lastDataPoint,
+      };
+      chartData.push(newDataPoint);
+    }
+    lastDataPoint = data[casesType][date];
+  }
+  return chartData;
+};

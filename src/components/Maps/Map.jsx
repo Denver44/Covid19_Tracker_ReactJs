@@ -3,12 +3,12 @@ import { MapContainer as LeafletMap, TileLayer } from "react-leaflet";
 import "./Map.css";
 import { showDataOnMap } from "../utils/util.jsx";
 
-function Mapp({ countries, casesType, position, zoom }) {
+function Map({ countries, casesType, position, zoom }) {
   // console.log(zoom);
   return (
     <div className="map">
       <LeafletMap center={position} zoom={zoom}>
-       <TileLayer
+        <TileLayer
           url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
           attribution='&copy; <a href="http://osm.org/copyright">OpenStreetMap</a> contributors'
         />
@@ -18,4 +18,4 @@ function Mapp({ countries, casesType, position, zoom }) {
   );
 }
 
-export default Mapp;
+export default Map;
