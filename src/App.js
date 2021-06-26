@@ -9,7 +9,6 @@ import {
 import Map from "./components/Maps/Map.jsx";
 import Table from "./components/Table/Table.jsx";
 import Graph from "./components/Graph/Graph.jsx";
-import { sortData } from "./components/utils/util.jsx";
 import "leaflet/dist/leaflet.css";
 import "./app.css";
 import icon from "./images/coronavirus.png";
@@ -20,6 +19,7 @@ import {
 } from "./components/Api/api.js";
 
 import AppStats from "./components/AppStats/AppStats.jsx";
+import { sortData } from "./components/utils/util.js";
 
 function App() {
   const [countries, setCountries] = useState([]);
@@ -28,7 +28,7 @@ function App() {
   const [casesType, setCasesType] = useState("cases");
   const [tableData, setTableData] = useState([]);
   const [mapCountries, setMapCountries] = useState([]);
-  const [mapCenter, setMapCenter] = useState({ lat: 21.5937, lng: 76.9629 });
+  const [mapCenter, setMapCenter] = useState([21.52, 76.34]);
   const [mapZoom, setMapZoom] = useState(4);
 
   const fetchAllData = () => {
@@ -53,6 +53,11 @@ function App() {
       .catch((error) => console.log(error));
   };
 
+  useEffect(() => {
+    fetchAllData();
+    fetchCountriesData();
+  }, []);
+
   const fetchOnCountryChangeData = (url, CountryCode) => {
     const result = getCountryChangeData(url);
     result
@@ -60,16 +65,10 @@ function App() {
         setCountry(CountryCode);
         setCountryInfo(data);
         setMapCenter([data.countryInfo.lat, data.countryInfo.long]);
-        setMapZoom(8);
+        setMapZoom(14);
       })
       .catch((error) => console.log(error));
   };
-
-  useEffect(() => {
-    fetchAllData();
-    fetchCountriesData();
-  }, []);
-
   const onCountryChange = (e) => {
     const CountryCode = e.target.value;
     const url =
