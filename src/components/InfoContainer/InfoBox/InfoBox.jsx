@@ -1,7 +1,7 @@
 import React from "react";
 import "./InfoBox.css";
 import { Card, CardContent, Typography } from "@material-ui/core";
-import { prettyPrintStat } from "../utils/util";
+import { prettyPrintStat } from "../../utils/util.js";
 
 const SelectColor = {
   borderColorClass: {

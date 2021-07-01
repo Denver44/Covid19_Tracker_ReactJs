@@ -18,8 +18,8 @@ import {
   handleFetchData,
 } from "./components/Api/api.js";
 
-import AppStats from "./components/AppStats/AppStats.jsx";
-import { sortData } from "./components/utils/util.js";
+import InfoContainer from "./components/InfoContainer/InfoContainer.jsx";
+import { capitalize, sortData } from "./components/utils/util.js";
 
 function App() {
   const [countries, setCountries] = useState([]);
@@ -29,7 +29,7 @@ function App() {
   const [tableData, setTableData] = useState([]);
   const [mapCountries, setMapCountries] = useState([]);
   const [mapCenter, setMapCenter] = useState([21.52, 76.34]);
-  const [mapZoom, setMapZoom] = useState(4);
+  const [mapZoom, setMapZoom] = useState(3);
 
   const fetchAllData = () => {
     const result = handleFetchData("/all");
@@ -63,16 +63,22 @@ function App() {
     result
       .then(({ data }) => {
         setCountry(CountryCode);
-        setCountryInfo(data);
-        setMapCenter([data.countryInfo.lat, data.countryInfo.long]);
+        if (CountryCode !== "Worldwide") setCountryInfo(data);
+        setMapCountries(data);
         setMapZoom(14);
+        setMapCenter([
+          data?.countryInfo?.lat ? data.countryInfo.lat : 21.52,
+          data?.countryInfo?.long ? data.countryInfo.long : 56.34,
+        ]);
       })
       .catch((error) => console.log(error));
   };
+
   const onCountryChange = (e) => {
     const CountryCode = e.target.value;
     const url =
-      CountryCode === "Worldwide" ? `/all ` : `/countries/${CountryCode}`;
+      CountryCode === "Worldwide" ? `/countries ` : `/countries/${CountryCode}`;
+    if (CountryCode === "Worldwide") fetchAllData();
     fetchOnCountryChangeData(url, CountryCode);
   };
 
@@ -93,14 +99,16 @@ function App() {
             >
               <MenuItem value="Worldwide">Worldwide</MenuItem>
               {countries.map((country) => (
-                <MenuItem value={country.value}>{country.name}</MenuItem>
+                <MenuItem key={country.value} value={country.value}>
+                  {country.name}
+                </MenuItem>
               ))}
             </Select>
           </FormControl>
         </div>
 
         <div className="app_stats">
-          <AppStats
+          <InfoContainer
             {...{
               countryInfo,
               casesType,
@@ -118,10 +126,10 @@ function App() {
       </div>
       <Card className="app_right">
         <CardContent>
-          <h3>Live cases by Country</h3>
+          <h3>Total Cases By Country</h3>
           <Table countries={tableData}></Table>
-          <h3>Worldwide new {casesType}</h3>
-          <Graph className="graph" casesType={casesType}></Graph>
+          <h3>Worldwide {capitalize(casesType)}</h3>
+          <Graph className="graph" casesType={casesType} />
         </CardContent>
       </Card>
     </div>
