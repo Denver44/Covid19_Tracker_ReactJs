@@ -14,7 +14,7 @@ const Graph = (props) => {
     });
   };
   useEffect(() => {
-    handleFetchCasesByDays(120, casesType);
+    handleFetchCasesByDays(90, casesType);
   }, [casesType]);
 
   return (
@@ -36,5 +36,4 @@ const Graph = (props) => {
     </div>
   );
 };
-
 export default Graph;
