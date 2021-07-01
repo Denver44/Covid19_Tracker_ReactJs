@@ -1,7 +1,7 @@
 import React from "react";
-import InfoBox from "../InfoBox/InfoBox";
+import InfoBox from "./InfoBox/InfoBox";
 
-const AppStats = ({ countryInfo, setCasesType, casesType }) => {
+const InfoContainer = ({ countryInfo, setCasesType, casesType }) => {
   return (
     <>
       <InfoBox
@@ -35,4 +35,4 @@ const AppStats = ({ countryInfo, setCasesType, casesType }) => {
   );
 };
 
-export default AppStats;
+export default InfoContainer;
