@@ -1,6 +1,7 @@
 # Covid-19 Tracker Using ReactJS
 
-<!-- ## <a href="https://covid19-tracker-react-js.vercel.app/" target="_blank">LIVE DEMO</a> -->
+
+## <a href="https://covid19-tracker-livid.vercel.app/" target="_blank">LIVE DEMO</a>
 
 ## Description
 
